@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>অনলাইন স্টাডি | একাদশ–দ্বাদশ</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,"Noto Sans Bengali",sans-serif;background:#f5f7fb;color:#172033;line-height:1.7}
+header{background:linear-gradient(135deg,#673ab7,#512da8);color:#fff;text-align:center;padding:28px 15px}
+header h1{margin:0 0 6px;font-size:28px}
+header p{margin:0;opacity:.92}
+.container{max-width:1000px;margin:25px auto;padding:0 15px}
+.card{background:#fff;border-radius:14px;padding:20px;margin-bottom:18px;box-shadow:0 5px 20px rgba(0,0,0,.07)}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:15px}
+label{font-weight:700;display:block;margin-bottom:6px}
+select{width:100%;padding:12px;border:1px solid #d7dbe5;border-radius:9px;background:#fff;font-size:16px}
+.info{background:#f3efff;border-left:5px solid #673ab7;padding:15px;border-radius:8px}
+.chapter-title{font-size:23px;font-weight:700;color:#512da8;margin-bottom:10px}
+.lesson-list{display:flex;flex-direction:column;gap:8px}
+.lesson-btn{border:1px solid #ddd;background:#fff;padding:12px 14px;border-radius:8px;text-align:left;cursor:pointer;font-size:16px}
+.lesson-btn:hover{background:#f5f0ff;border-color:#673ab7}
+.lesson-btn.free{border-left:4px solid #2e7d32}
+.lesson-btn.paid{border-left:4px solid #e65100}
+.content{margin-top:18px;padding:20px;background:#fafafa;border-radius:10px;border:1px solid #eee}
+.paid-box{background:#fff3e0;border:1px solid #ffcc80;border-radius:12px;padding:22px;text-align:center}
+.buy{display:inline-block;margin-top:12px;background:#673ab7;color:#fff;text-decoration:none;padding:11px 22px;border-radius:8px;font-weight:bold}
+.badge{display:inline-block;padding:3px 9px;border-radius:20px;font-size:13px;margin-left:8px}
+.free-badge{background:#e8f5e9;color:#2e7d32}
+.paid-badge{background:#fff3e0;color:#e65100}
+.empty{padding:20px;text-align:center;color:#666;background:#f8f8f8;border-radius:10px}
+footer{text-align:center;color:#777;padding:25px}
+@media(max-width:650px){.grid{grid-template-columns:1fr}header h1{font-size:23px}.container{margin-top:15px}}
+</style>
+</head>
+<body>
+
+<header>
+<h1>অনলাইন স্টাডি</h1>
+<p>একাদশ–দ্বাদশ শ্রেণি | ইসলাম শিক্ষা</p>
+</header>
+
+<div class="container">
+
+<div class="card">
+<div class="grid">
+<div>
+<label>শ্রেণী নির্বাচন করুন</label>
+<select id="classSelect"><option value="">-- শ্রেণী নির্বাচন করুন --</option></select>
+</div>
+<div>
+<label>বিষয় নির্বাচন করুন</label>
+<select id="subjectSelect" disabled><option value="">-- বিষয় নির্বাচন করুন --</option></select>
+</div>
+<div>
+<label>অধ্যায় নির্বাচন করুন</label>
+<select id="chapterSelect" disabled><option value="">-- অধ্যায় নির্বাচন করুন --</option></select>
+</div>
+<div>
+<label>পাঠ নির্বাচন করুন</label>
+<select id="lessonSelect" disabled><option value="">-- পাঠ নির্বাচন করুন --</option></select>
+</div>
+</div>
+</div>
+
+<div id="chapterInfo"></div>
+<div id="contentArea"></div>
+
+</div>
+
+<footer>© অনলাইন স্টাডি | সকল অধিকার সংরক্ষিত</footer>
+
+<script>
+const BUY_URL="https://shukhimart.com.bd/product/online-book-UDzKcg";
+
+const studyData=[
+{
+id:"class11",name:"একাদশ",subjects:[{
+id:"subject11",name:"ইসলাম শিক্ষা ১ম পত্র",chapters:[
+["প্রথম অধ্যায়: ইসলামী শিক্ষা ও সংস্কৃতি",["ইসলাম শিক্ষার পরিচয়","ইসলাম শিক্ষার উদ্দেশ্য","ইসলাম শিক্ষার বৈশিষ্ট্য","ইসলাম শিক্ষার গুরুত্ব ও তাৎপর্য","নৈতিক শিক্ষার গুরুত্ব ও প্রয়োজনীয়তা","মতবাদের পরিচয়","মতবাদের কার্যাবলি","মতবাদের প্রয়োজনীয়তা","ইসলামী সংস্কৃতি পরিচয়","ইসলামী সংস্কৃতির গুরুত্ব","ইসলামী সংস্কৃতির বিভিন্ন দিক","ইসলামী সংস্কৃতির ব্যবহারিক দিক ও উদাহরণ","ইসলামে জ্ঞান-বিজ্ঞান চর্চা ও শিক্ষার গুরুত্ব","শিক্ষায় মুসলিম মনীষীদের অবদান","সাহিত্য ও দর্শনে মুসলিম মনীষীদের অবদান","পদার্থবিজ্ঞানে মুসলিম মনীষীদের অবদান","রসায়নশাস্ত্র ও গণিতশাস্ত্রে মুসলিম মনীষীদের অবদান","প্রযুক্তিতে মুসলমানদের অবদান","ভূগোলশাস্ত্র ও জ্যোতির্বিদ্যায় মুসলিম মনীষীদের অবদান","চিকিৎসাবিজ্ঞানে মুসলিম মনীষীদের অবদান","বাংলাদেশে ইসলামী শিক্ষা ও সংস্কৃতির বিকাশে বিশিষ্ট আলেম-উলামা, পীর-মাশায়েখ ও অলি-দরবেশগণের অবদান"]],
+["দ্বিতীয় অধ্যায়: ইসলাম ও ব্যক্তিজীবন",["ইসলামের বুনিয়াদি আমলসমূহের ফজিলত","তাকওয়া","ব্যক্তিজীবনে তাকওয়ার গুরুত্ব ও তাৎপর্য","কীভাবে তাকওয়া অর্জন করা যায়","সত্যবাদিতা","মিথ্যাচার","সবর","জিকির","ব্যক্তি ও সমাজজীবনে জিকিরের গুরুত্ব ও প্রয়োজনীয়তা","শোকর","ব্যক্তি ও সমাজজীবনে শোকরের গুরুত্ব ও প্রয়োজনীয়তা","তাওয়াক্কুল","ঈমান","ব্যক্তি ও সমাজজীবনে ঈমানের গুরুত্ব ও প্রয়োজনীয়তা","কর্তব্যপরায়ণতা এবং ব্যক্তিজীবনে এর গুরুত্ব ও প্রয়োজনীয়তা","সমাজজীবনে কর্তব্যপরায়ণতার গুরুত্ব ও প্রয়োজনীয়তা","হালাল উপার্জন ও এর গুরুত্ব","হারাম উপার্জন ও এর পরিণাম","দেশপ্রেম","নারীর অধিকার","নারীর প্রতি সম্মানবোধ","শিশু অধিকার","প্রতিবন্ধীদের অধিকার"]],
+["তৃতীয় অধ্যায়: ইসলাম ও পারিবারিক জীবন",["ইসলামী পরিবার ও এর বৈশিষ্ট্য","ইসলামী পরিবারের গুরুত্ব ও তাৎপর্য","ইসলামী পরিবারে মাতাপিতার কর্তব্য ও সন্তানের অধিকার","মাতার দায়িত্ব ও কর্তব্য","পিতার দায়িত্ব ও কর্তব্য","ভাই-বোনের পারস্পরিক অধিকার ও কর্তব্য","ইসলামী পরিবারে স্ত্রীর প্রতি স্বামীর কর্তব্য বা স্ত্রীর অধিকার","স্বামীর প্রতি স্ত্রীর কর্তব্য বা স্বামীর অধিকার","ইসলামী পরিবারে সন্তানের কর্তব্য বা মাতাপিতার অধিকার","মাতাপিতার মৃত্যুর পর সন্তানের দায়িত্ব ও কর্তব্য","নৈতিক ও মানবিক জীবন গঠনে পরিবারের ভূমিকা"]],
+["চতুর্থ অধ্যায়: ইসলাম ও সমাজজীবন",["ইসলামী সমাজব্যবস্থা","ইসলামী সমাজে আত্মীয়-স্বজনের অধিকার ও কর্তব্য","প্রতিবেশীর অধিকার ও কর্তব্য","ইসলামী সমাজে মসজিদের ভূমিকা","ইমামের দায়িত্ব ও কর্তব্য","সমাজে আদল (ন্যায়বিচার) প্রতিষ্ঠা","সামাজিক নিরাপত্তা প্রতিষ্ঠায় সৎকাজের আদেশ ও অসৎকাজের নিষেধ (আমর বিল মারুফ ও নাহি আনিল মুনকার)","সমাজে শান্তি ও ন্যায়বিচার প্রতিষ্ঠায় জিহাদের গুরুত্ব ও প্রয়োজনীয়তা","সন্ত্রাস দমনে জিহাদ","মিথ্যাচার ও প্রতারণা","গিবত","অপসংস্কৃতি","সুদ ও ঘুষ","জুয়া","মাদকাসক্তি ও ধূমপান","অপরের অধিকার হরণ","চুরি, ডাকাতি ও ছিনতাই","অপহরণ","হত্যা","আত্মহত্যা","যৌতুক ও নারী নির্যাতন","ইভটিজিং","খাদ্যে ভেজাল","দুর্নীতি","সাম্প্রদায়িক সম্প্রীতি ও শান্তিময় সমাজ গঠনে ইসলামের ভূমিকা"]],
+["পঞ্চম অধ্যায়: ইসলামের অর্থব্যবস্থা",["ইসলামী অর্থব্যবস্থার ধারণা","ইসলামী অর্থব্যবস্থার বৈশিষ্ট্য","ইসলামী অর্থব্যবস্থার গুরুত্ব ও প্রয়োজনীয়তা","ইসলামী অর্থব্যবস্থায় রাষ্ট্রীয় আয়ের উৎসসমূহ","যাকাত","ইসলামী অর্থব্যবস্থায় যাকাতের গুরুত্ব ও ভূমিকা","উশর","খারাজ","ইসলামী অর্থব্যবস্থায় উশর ও খারাজের গুরুত্ব","সাদাকাত","প্রচলিত অর্থব্যবস্থাসমূহ ও ইসলামী অর্থব্যবস্থা","ইসলামী ব্যাংকিং-এর ধারণা","ইসলামী ব্যাংকিং-এ বিনিয়োগ পদ্ধতি","ইসলামী ব্যাংকিং-এর গুরুত্ব ও প্রয়োজনীয়তা"]],
+["ষষ্ঠ অধ্যায়: ইসলামী রাষ্ট্রব্যবস্থা",["ইসলামী রাষ্ট্রের পরিচয়","ইসলামী রাষ্ট্রের বৈশিষ্ট্য","ইসলামী রাষ্ট্রের গুরুত্ব","ইসলামী রাষ্ট্রের উপাদান ও গঠনপ্রণালি","খিলাফত","ইসলামী রাষ্ট্রের খলিফা বা রাষ্ট্রপ্রধানের নৈতিক বা চারিত্রিক গুণাবলি","ইসলামী রাষ্ট্রের রাষ্ট্রপ্রধানের দায়িত্ব ও কর্তব্য","মজলিসে শূরার সদস্যদের দায়িত্ব ও কর্তব্য","নাগরিক","ইসলামী রাষ্ট্রের নাগরিকদের অধিকার","ইসলামী রাষ্ট্রের নাগরিকদের কর্তব্য","মদিনা সনদের ধারণা ও এর ধারাসমূহ","মদিনা সনদের গুরুত্ব ও তাৎপর্য","ইসলামী রাষ্ট্রে অমুসলিম নাগরিকের অধিকার"]],
+["সপ্তম অধ্যায়: ইসলামের আন্তর্জাতিক ব্যবস্থা",["উম্মাহর ধারণা","বিশ্বশান্তি প্রতিষ্ঠায় মুসলিম উম্মাহর দায়িত্ব ও কর্তব্য","ইসলামী দাওয়াহর পরিচয় এবং এর গুরুত্ব ও তাৎপর্য","ইসলামী দাওয়াহর মাধ্যম ও কৌশল","দাঈ (ধর্ম প্রচারক)-এর গুণাবলি","খিদমতে খালক-এর ধারণা ও গুরুত্ব","সৃষ্টির সেবায় মানুষের দায়িত্ব ও কর্তব্য","মানবাধিকার সংরক্ষণে ইসলাম","পরিবেশ সংরক্ষণে ইসলাম","পরিবেশ সংরক্ষণে মানুষের দায়িত্ব","ইসলামে আন্তর্জাতিক সম্পর্ক ও এর গুরুত্ব","আন্তর্জাতিক সম্পর্ক প্রতিষ্ঠায় ইসলামের ভূমিকা"]]
+].map((x,i)=>({id:"c11_"+(i+1),title:x[0],lessons:x[1]}))
+}]},
+{
+id:"class12",name:"দ্বাদশ",subjects:[{
+id:"subject12",name:"ইসলাম শিক্ষা ২য় পত্র",chapters:[
+["প্রথম অধ্যায়: আল-কুরআন",["আল-কুরআনের পরিচয়","আল-কুরআনের বৈশিষ্ট্য","আল-কুরআনের গুরুত্ব ও মাহাত্ম্য","আল-কুরআনের কতিপয় নাম","আল-কুরআনের আলোচ্য বিষয়","কুরআন তিলাওয়াতের গুরুত্ব ও ফজিলত","আল-কুরআন অবতরণ","কুরআন শিক্ষার গুরুত্ব","ওহি ও শানে নুযুল","মক্কি ও মাদানি সূরার বৈশিষ্ট্য","আল-কুরআনের সংরক্ষণ","আল-কুরআন সংকলন","আদর্শ জীবন গঠনে আল-কুরআনের ভূমিকা","সূরা আল-বাকারার পরিচিতি ও নামকরণ","সূরা আল-বাকারা নাজিলের সময়কাল ও শানে নুযুল","সূরা আল-বাকারার বিষয়বস্তু","সূরা আল-বাকারার ১ম রুকু : অনুবাদ ও ব্যাখ্যা","সূরা আল-বাকারার ২য় রুকু : অনুবাদ ও ব্যাখ্যা","সূরা আল-বাকারার ৩য় রুকু : অনুবাদ ও ব্যাখ্যা","সূরা আল-বাকারার ৪র্থ রুকু : অনুবাদ ও ব্যাখ্যা","সূরা আল-বাকারার ৫ম রুকু : অনুবাদ ও ব্যাখ্যা","সূরা আল-বাকারার ৬ষ্ঠ রুকু : অনুবাদ ও ব্যাখ্যা","সূরা আল-বাকারার আলোকে মুনাফিকের পরিচয়","সূরা আল-বাকারার আলোকে কাফিরের পরিচয়","সূরা আল-বাকারার আলোকে মুনাফিকদের পরিচয়","হযরত আদম (আ.)-এর সৃষ্টি এবং পৃথিবীতে অবতরণের ইতিহাস","ইবলিসের পরিচয়","ফিরাউনের পরিচয়","বনি ইসরাইল জাতি ও তাদের প্রতি আল্লাহর অনুগ্রহ","বনি ইসরাইলের দুষ্কর্মের বিবরণ","গো-বৎস পূজার ঘটনা"]],
+["দ্বিতীয় অধ্যায়: আল-হাদিস",["হাদিসের পরিচয়","রাবি, সনদ ও মতন","হাদিস, সুন্নাহ, আছার ও খবর","আল-কুরআনের সাথে হাদিসের সম্পর্ক ও পার্থক্য","ইতিহাস রচনায় হাদিসের ভূমিকা","হাদিস সংরক্ষণ","হাদিস সংকলন","সিহাহ সিত্তাহ ও প্রসিদ্ধ ছয় ইমাম","হাদিসের গুরুত্ব ও প্রয়োজনীয়তা","হাদিসের প্রকারভেদ","নৈতিক জীবন গঠনে হাদিসের ভূমিকা","মহানবি (সা.)-এর পঁচিশটি হাদিসের অনুবাদ, ব্যাখ্যা ও শিক্ষা"]],
+["তৃতীয় অধ্যায়: আল-ইজমা",["ইজমার উৎপত্তির ইতিহাস","ইজমার পরিচয়","ইজমার প্রকারভেদ","ইজমার পদ্ধতি ও রুকন","ইজমার আহল বা ইজমাকারীদের যোগ্যতা","ইজমার শর্তসমূহ","ইজমার স্তর ও হুকুম","ইজমার গুরুত্ব ও প্রয়োজনীয়তা"]],
+["চতুর্থ অধ্যায়: আল-কিয়াস",["কিয়াসের উৎপত্তির ইতিহাস","কিয়াসের পরিচয়","কিয়াসের রুকন","কিয়াসের প্রকারভেদ","কিয়াসের শর্তসমূহ","কিয়াসের মূলনীতি ও হুকুম","কিয়াসের গুরুত্ব ও প্রয়োজনীয়তা","কিয়াস ইসলামী আইনের উৎস কি না"]],
+["পঞ্চম অধ্যায়: ফিকহশাস্ত্র",["ফিকহশাস্ত্রের পরিচয়","ফিকহশাস্ত্রের লক্ষ্য, উদ্দেশ্য ও বিষয়বস্তু","ফিকহশাস্ত্রের উৎপত্তি ও ক্রমবিকাশ","ফিকহশাস্ত্রের গুরুত্ব ও প্রয়োজনীয়তা","মাযহাবের সংজ্ঞা এবং বিভিন্ন মাযহাব উৎপত্তির কারণ","হানাফি মাযহাব","মালিকি মাযহাব","শাফিঈ মাযহাব","হাম্বলি মাযহাব","চার ইমামের সংক্ষিপ্ত পরিচিতি: ইমাম আবু হানিফা (রহ.)","ইমাম মালিক (রহ.)","ইমাম শাফিঈ (রহ.)","ইমাম আহমদ ইবনে হাম্বল (রহ.)"]],
+["ষষ্ঠ অধ্যায়: মৌলিক ইবাদত",["ইবাদতের পরিচয় ও প্রকারভেদ","ইবাদতের গুরুত্ব ও তাৎপর্য","সালাতের গুরুত্ব","সালাতের শিক্ষা","যাকাতের গুরুত্ব","যাকাতের শিক্ষা","সাওমের গুরুত্ব","সাওমের শিক্ষা","হজের গুরুত্ব","হজের শিক্ষা"]],
+["সপ্তম অধ্যায়: তাসাউফ",["তাসাউফের পরিচয় ও উদ্দেশ্য","তাসাউফের উৎপত্তি","তাসাউফের ক্রমবিকাশ","শরিয়ত ও তাসাউফের মধ্যে সম্পর্ক","তাসাউফের গুরুত্ব ও প্রয়োজনীয়তা","আত্মাকে সুস্থ ও পবিত্র রাখার উপায়","হযরত হাসান বসরি (রহ.) (২১–১১০ হি.)","হযরত আবদুল কাদির জিলানি (রহ.) এবং হযরত বাহাউদ্দিন নকশবন্দ (রহ.)","হযরত মুঈনুদ্দিন চিশতি (রহ.) এবং হযরত শাহ আহমদ সিরহিন্দি (রহ.)","নৈতিক, অসাম্প্রদায়িক ও মানবিক মূল্যবোধ গঠনে তাসাউফের ভূমিকা"]]
+].map((x,i)=>({id:"c12_"+(i+1),title:x[0],lessons:x[1]}))
+}]}
+];
+
+const classSelect=document.getElementById("classSelect");
+const subjectSelect=document.getElementById("subjectSelect");
+const chapterSelect=document.getElementById("chapterSelect");
+const lessonSelect=document.getElementById("lessonSelect");
+const chapterInfo=document.getElementById("chapterInfo");
+const contentArea=document.getElementById("contentArea");
+
+function resetSelect(el,text,disabled=true){el.innerHTML=`<option value="">${text}</option>`;el.disabled=disabled}
+function showContent(ch,l){
+ if(!ch||!l){contentArea.innerHTML="";return}
+ const chapterIndex=ch.subjectIndex;
+ const isFree=chapterIndex===0;
+ if(!isFree){
+  contentArea.innerHTML=`<div class="paid-box"><h2>🔒 এই অধ্যায়টি Paid</h2><p>এই অধ্যায়ের সকল পাঠ দেখতে ৳১০ প্রদান করে অ্যাক্সেস নিতে হবে।</p><a class="buy" href="${BUY_URL}" target="_blank">অ্যাক্সেস কিনুন — ৳১০</a></div>`;
+ }else{
+  contentArea.innerHTML=`<div class="content"><h2>${l}</h2><div class="empty">শীঘ্রই কনটেন্ট আপডেট করা হবে।</div></div>`;
+ }
+}
+
+studyData.forEach(c=>classSelect.add(new Option(c.name,c.id)));
+
+classSelect.addEventListener("change",()=>{
+ const c=studyData.find(x=>x.id===classSelect.value);
+ resetSelect(subjectSelect,"-- বিষয় নির্বাচন করুন --",!c);
+ resetSelect(chapterSelect,"-- অধ্যায় নির্বাচন করুন --",true);
+ resetSelect(lessonSelect,"-- পাঠ নির্বাচন করুন --",true);
+ chapterInfo.innerHTML="";contentArea.innerHTML="";
+ if(c)c.subjects.forEach(s=>subjectSelect.add(new Option(s.name,s.id)));
+});
+
+subjectSelect.addEventListener("change",()=>{
+ const c=studyData.find(x=>x.id===classSelect.value);
+ const s=c?.subjects.find(x=>x.id===subjectSelect.value);
+ resetSelect(chapterSelect,"-- অধ্যায় নির্বাচন করুন --",!s);
+ resetSelect(lessonSelect,"-- পাঠ নির্বাচন করুন --",true);
+ chapterInfo.innerHTML="";contentArea.innerHTML="";
+ if(s)s.chapters.forEach((ch,i)=>{
+  ch.subjectIndex=i;
+  const opt=new Option(`${ch.title} ${i===0?"— FREE":"— ৳১০"}`,ch.id);
+  chapterSelect.add(opt);
+ });
+});
+
+chapterSelect.addEventListener("change",()=>{
+ const c=studyData.find(x=>x.id===classSelect.value);
+ const s=c?.subjects.find(x=>x.id===subjectSelect.value);
+ const ch=s?.chapters.find(x=>x.id===chapterSelect.value);
+ resetSelect(lessonSelect,"-- পাঠ নির্বাচন করুন --",!ch);
+ contentArea.innerHTML="";
+ if(!ch){chapterInfo.innerHTML="";return}
+ const free=ch.subjectIndex===0;
+ chapterInfo.innerHTML=`<div class="card info"><div class="chapter-title">${ch.title} <span class="badge ${free?"free-badge":"paid-badge"}">${free?"FREE":"PAID — ৳১০"}</span></div><div>এই অধ্যায়ে ${ch.lessons.length}টি পাঠ রয়েছে।</div></div>`;
+ ch.lessons.forEach((l,i)=>lessonSelect.add(new Option(`${i+1}. ${l}`,i)));
+});
+
+lessonSelect.addEventListener("change",()=>{
+ const c=studyData.find(x=>x.id===classSelect.value);
+ const s=c?.subjects.find(x=>x.id===subjectSelect.value);
+ const ch=s?.chapters.find(x=>x.id===chapterSelect.value);
+ const l=ch?.lessons[Number(lessonSelect.value)];
+ showContent(ch,l);
+});
+</script>
+</body>
+</html>
